@@ -16,6 +16,7 @@ provider "aws" {
 }
 
 module "vpc" {
+  source          = "./modules/vpc"
   vpc_name        = "contact-list-vpc"
   cidr            = "10.16.0.0/16"
   azs             = ["us-west-2a", "us-west-2b"]
