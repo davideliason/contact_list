@@ -35,3 +35,14 @@ module "security_group" {
   vpc_id = module.vpc.vpc_id
   tags   = { Environment = "dev" }
 }
+
+# create module for ec2 instance
+module "ec2_instance" {
+  source             = "./modules/ec2-instance"
+  name               = "contact-list-ec2"
+  vpc_id             = module.vpc.vpc_id
+  subnet_ids         = module.vpc.public_subnets[0]
+  security_group_ids = [module.security_group.security_group_id]
+  tags               = { Environment = "dev" }
+}
+
