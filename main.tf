@@ -36,11 +36,6 @@ module "security_group" {
   tags   = { Environment = "dev" }
 }
 
-# security_group output
-output "security_group_id" {
-  value = module.security_group.security_group_id
-}
-
 module "ec2" {
   source            = "./modules/ec2"
   ami               = "ami-07d9cf938edb0739b"
