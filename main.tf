@@ -36,13 +36,19 @@ module "security_group" {
   tags   = { Environment = "dev" }
 }
 
-# create module for ec2 instance
-module "ec2_instance" {
-  source             = "./modules/ec2-instance"
-  name               = "contact-list-ec2"
-  vpc_id             = module.vpc.vpc_id
-  subnet_ids         = module.vpc.public_subnets[0]
-  security_group_ids = [module.security_group.security_group_id]
-  tags               = { Environment = "dev" }
+# security_group output
+output "security_group_id" {
+  value = module.security_group.security_group_id
+}
+
+module "ec2" {
+  source            = "./modules/ec2"
+  ami               = "ami-07d9cf938edb0739b"
+  instance_type     = "t2.micro"
+  subnet_id         = module.vpc.public_subnets[0]
+  security_group_id = module.security_group.security_group_id
+  tags              = { Environment = "dev" }
+  key_name          = "best_dir"
+  allowed_ssh_cidrs = ["0.0.0.0/0"]
 }
 
